@@ -14,19 +14,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ideas', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->text('description')->nullable();
             $table
                 ->enum('status', array_column(IdeaStatus::cases(), 'value'))
                 ->default(IdeaStatus::PENDING->value);
             $table->string('image_path')->nullable();
+            $table->json('links')->default('[]');
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
-
-            $table
-                ->foreignIdFor(User::class)
-                ->constrained()
-                ->cascadeOnDelete();
         });
     }
 
