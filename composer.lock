@@ -8171,6 +8171,11 @@
         {
             "name": "phpstan/phpstan",
             "version": "2.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "e5cc34d491a90e79c216d824f60fe21fd4d93bd6"
+            },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e5cc34d491a90e79c216d824f60fe21fd4d93bd6",
