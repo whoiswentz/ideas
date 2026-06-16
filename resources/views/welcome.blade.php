@@ -1,3 +1,3 @@
 <x-layout>
-    <p>asdajskdajsk</p>
+    <p>Home Page</p>
 </x-layout>

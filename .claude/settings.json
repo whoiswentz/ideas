@@ -1,0 +1,11 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ],
+  "enabledPlugins": {
+    "laravel@laravel": true,
+    "laravel-cloud@laravel": true,
+    "laravel-nightwatch@laravel": true
+  }
+}
