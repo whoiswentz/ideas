@@ -18,7 +18,7 @@ test('register a user', function () {
 test('required a valid email address', function () {
     visit('/register')
         ->fill('name', 'John Doe')
-        ->fill('email', 'jonh')
+        ->fill('email', 'john')
         ->fill('password', 'password@123')
         ->click('@create-account-button')
         ->assertPathIs('/register');
