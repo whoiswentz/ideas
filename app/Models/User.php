@@ -15,6 +15,8 @@ use Illuminate\Notifications\Notifiable;
 use Override;
 
 /**
+ * @property string email
+ * @property string name
  * @property Idea ideas
  */
 #[Fillable(['name', 'email', 'password'])]
