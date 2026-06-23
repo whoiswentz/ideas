@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\IdeaStatus;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
@@ -18,10 +19,20 @@ class IdeaController extends Controller
      */
     public function index(Request $request): View|Factory
     {
-        $ideas = $request->user()->ideas()->get();
+        $status = $request->status;
+        if (! in_array($status, IdeaStatus::values())) {
+            $status = null;
+        }
+
+        $user = $request->user();
+        $ideas = $user
+            ->ideas()
+            ->when($status, fn ($query, $status) => $query->where('status', $status))
+            ->get();
 
         return view('idea.index', [
             'ideas' => $ideas,
+            'statusCounts' => Idea::statusCounts($user),
         ]);
     }
 

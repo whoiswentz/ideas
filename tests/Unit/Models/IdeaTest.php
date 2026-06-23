@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\IdeaStatus;
+use App\Enums\IdeaStatus;
 use App\Models\Idea;
 use App\Models\User;
 

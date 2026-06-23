@@ -1,5 +1,5 @@
 @php
-    use App\IdeaStatus;
+    use App\Enums\IdeaStatus;
 @endphp
 
 @props ([

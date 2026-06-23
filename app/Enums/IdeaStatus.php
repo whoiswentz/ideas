@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Enums;
+
+use App\Enums\Concerns\HasValues;
 
 enum IdeaStatus: string
 {
+    use HasValues;
+
     case PENDING = 'pending';
     case IN_PROGRESS = 'in_progress';
     case COMPLETED = 'completed';
