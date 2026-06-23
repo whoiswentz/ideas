@@ -8,6 +8,7 @@ use App\Http\Requests\CreateSessionRequest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,9 +35,12 @@ class SessionsController extends Controller
             ->with('success', 'You have successfully logged in');
     }
 
-    public function destroy(): Redirector|RedirectResponse
+    public function destroy(Request $request): Redirector|RedirectResponse
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect('/');
     }
