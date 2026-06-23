@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Override;
 
 /***
@@ -19,6 +20,8 @@ use Override;
  * @property User user
  * @property IdeaStatus status
  * @property array<Step> steps
+ * @property Carbon created_at
+ * @property Carbon updated_at
  */
 class Idea extends Model
 {

@@ -19,7 +19,6 @@
                 <a href="/register">Register</a>
                 <a href="/login" class="btn">Sign In</a>
             @endguest
-
         </div>
     </div>
 </nav>
