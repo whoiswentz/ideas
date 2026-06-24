@@ -21,6 +21,7 @@ use Override;
  * @property User user
  * @property IdeaStatus status
  * @property array<Step> steps
+ * @property array<string> links
  * @property Carbon created_at
  * @property Carbon updated_at
  */
