@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Providers\AppServiceProvider;
 
+mutates(AppServiceProvider::class);
+
 it('rejects framework infrastructure queries', function (string $sql) {
     expect(AppServiceProvider::isInfrastructureQuery($sql))->toBeTrue();
 })->with([

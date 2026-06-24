@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
+     *
+     * Framework bootstrap wiring is excluded from mutation testing; the
+     * testable behavior lives in isInfrastructureQuery() below.
+     *
+     * @pest-mutate-ignore
      */
     public function boot(): void
     {
@@ -51,6 +56,6 @@ class AppServiceProvider extends ServiceProvider
             '"failed_jobs"',
         ];
 
-        return array_any($frameworkTables, fn ($table) => str_contains($sql, (string) $table));
+        return array_any($frameworkTables, fn (string $table) => str_contains($sql, $table));
     }
 }
