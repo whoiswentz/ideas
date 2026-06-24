@@ -1,5 +1,5 @@
 @php
-    use \App\Models\Idea
+    use App\Models\Idea
 
     /** @var Idea $idea */
 @endphp
