@@ -41,7 +41,7 @@
         }
     },
     "scripts": {
-        "format": ["vendor/bin/rector --clear-cache", "vendor/bin/pint"],
+        "format": ["vendor/bin/rector --clear-cache", "vendor/bin/pint", "npm run format:blade"],
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
