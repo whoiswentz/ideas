@@ -21,14 +21,10 @@ class IdeaController extends Controller
     public function index(Request $request): View|Factory
     {
         $status = $request->status;
-        if (! in_array($status, IdeaStatus::values())) {
-            $status = null;
-        }
-
         $user = $request->user();
         $ideas = $user
             ->ideas()
-            ->when($status, fn ($query, $status) => $query->where('status', $status))
+            ->when(in_array($status, IdeaStatus::values()), fn ($query, $status) => $query->where('status', $status))
             ->get();
 
         return view('idea.index', [
