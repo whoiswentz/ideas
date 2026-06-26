@@ -19,12 +19,12 @@
             "
             x-show="show"
             x-transition.opacity.duration.300ms
-            class="fixed bottom-4 right-4 bg-primary text-primary-foreground px-6 py-3 rounded-xl shadow-lg"
+            class="bg-primary text-primary-foreground fixed right-4 bottom-4 rounded-xl px-6 py-3 shadow-lg"
         >
             {{ session('success') }}
         </div>
     @endsession
 
-    <main class="max-w-7xl mx-auto px-6 pb-10">{{ $slot }}</main>
+    <main class="mx-auto max-w-7xl px-6 pb-10">{{ $slot }}</main>
 </body>
 </html>

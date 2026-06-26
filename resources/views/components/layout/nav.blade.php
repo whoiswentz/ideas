@@ -1,5 +1,5 @@
-<nav class="border-b border-border px-6">
-    <div class="mx-auto h-16 flex max-w-7xl items-center justify-between">
+<nav class="border-border border-b px-6">
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between">
         <div>
             <a href="/">
                 <x-logo />

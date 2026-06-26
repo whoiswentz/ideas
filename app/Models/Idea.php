@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\IdeaStatus;
 use Database\Factories\IdeaFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,7 @@ use Override;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
+#[Fillable('title', 'description', 'status')]
 class Idea extends Model
 {
     /** @use HasFactory<IdeaFactory> */
