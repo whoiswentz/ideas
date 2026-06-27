@@ -6,11 +6,7 @@
     @endif
 
     @if ($type === 'textarea')
-        <textarea
-            name="{{ $name }}"
-            id="{{ $name }}"
-            class="textarea"
-            {{ $attributes }}
+        <textarea name="{{ $name }}" id="{{ $name }}" class="textarea" {{ $attributes }}
             >{{ old($name) }}
         </textarea
         >

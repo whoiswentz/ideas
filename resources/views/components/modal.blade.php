@@ -20,14 +20,9 @@
     :aria-hidden="!show"
     tabindex="-1"
 >
-    <x-card
-        @click.away="show = false"
-        class="max-h-[800dvh] w-full max-w-2xl overflow-auto shadow-xl"
-    >
+    <x-card @click.away="show = false" class="max-h-[800dvh] w-full max-w-2xl overflow-auto shadow-xl">
         <div class="flex items-center justify-between">
-            <h2 id="modal-{{ $title }}-title" class="text-xl font-bold">
-                {{ $title }}
-            </h2>
+            <h2 id="modal-{{ $title }}-title" class="text-xl font-bold">{{ $title }}</h2>
             <button @click="show = false" aria-label="Close modal">
                 <x-icons.close />
             </button>

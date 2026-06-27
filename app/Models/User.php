@@ -26,6 +26,11 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasUuids, Notifiable;
 
+    public function ideas(): HasMany
+    {
+        return $this->hasMany(Idea::class);
+    }
+
     #[Override]
     protected function casts(): array
     {
@@ -33,10 +38,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function ideas(): HasMany
-    {
-        return $this->hasMany(Idea::class);
     }
 }

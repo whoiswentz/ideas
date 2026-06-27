@@ -1,8 +1,4 @@
-<svg
-    class="h-8 w-auto"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1164 409"
->
+<svg class="h-8 w-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1164 409">
     <path
         d="M242.974 1.415c-6.2 0-13.201.7-16.301
                 1.5-7.8 2.1-15.3 5.7-22.6 10.9-6.9 5-9.4

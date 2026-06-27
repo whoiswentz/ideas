@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Override;
 
@@ -26,7 +25,12 @@ use Override;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-#[Fillable('title', 'description', 'status')]
+#[Fillable(
+    'title',
+    'description',
+    'status',
+    'links'
+)]
 class Idea extends Model
 {
     /** @use HasFactory<IdeaFactory> */
