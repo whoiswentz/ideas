@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\IdeaStatus;
+use Carbon\Carbon;
 use Database\Factories\IdeaFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
@@ -29,7 +30,8 @@ use Override;
     'title',
     'description',
     'status',
-    'links'
+    'links',
+    'steps'
 )]
 class Idea extends Model
 {
@@ -46,6 +48,9 @@ class Idea extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasMany<Step, $this>
+     */
     public function steps(): HasMany
     {
         return $this->hasMany(Step::class);

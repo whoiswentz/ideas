@@ -13,8 +13,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property string id
+ * @property bool completed
  */
-#[Fillable('description')]
+#[Fillable(
+    'description',
+    'completed'
+)]
 class Step extends Model
 {
     /** @use HasFactory<StepFactory> */

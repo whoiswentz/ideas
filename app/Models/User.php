@@ -26,6 +26,9 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasUuids, Notifiable;
 
+    /**
+     * @return HasMany<Idea, $this>
+     */
     public function ideas(): HasMany
     {
         return $this->hasMany(Idea::class);

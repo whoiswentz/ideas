@@ -30,6 +30,31 @@
             <x-card class="mt-6">
                 <div class="text-foreground max-w-none cursor-pointer">{{ $idea->description }}</div>
             </x-card>
+
+            @if ($idea->steps->count())
+                <div>
+                    <h3 class="mt-6 text-xl font-bold">Actionable steps</h3>
+                    <div class="mt-3 space-y-2">
+                        @foreach ($idea->steps as $step)
+                            <form method="POST" action="{{ route('step.update', $step) }}">
+                                @csrf
+                                @method ('PATCH')
+
+                                <x-card class="text-primary flex items-center gap-3 font-medium">
+                                    <div class="flex items-center gap-x-3">
+                                        <x-idea.step-check :completed="$step->completed" />
+                                        <span
+                                            class="{{ $step->completed ? 'line-through text-muted-foreground' : '' }}"
+                                            >{{ $step->description }}</span
+                                        >
+                                    </div>
+                                </x-card>
+                            </form>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             @if ($idea->links->count())
                 <div>
                     <h3 class="mt-6 text-xl font-bold">Links</h3>

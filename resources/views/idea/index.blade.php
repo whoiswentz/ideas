@@ -65,7 +65,35 @@
                 x-data="{
                     status: 'pending',
                     newLink: '',
+                    newStep: '',
                     links: [],
+                    steps: [],
+
+                    deleteLink(index) {
+                        this.links.splice(index, 1);
+                    },
+
+                    pushLink() {
+                        this.links.push(this.newLink.trim());
+                        this.newLink = '';
+                    },
+
+                    deleteStep(index) {
+                        this.steps.splice(index, 1);
+                    },
+
+                    pushStep() {
+                        this.steps.push(this.newStep.trim());
+                        this.newStep = '';
+                    },
+
+                    get isLinkEmpty() {
+                        return this.newLink.trim().length === 0;
+                    },
+
+                    get isStepEmpty() {
+                        return this.newStep.trim().length === 0;
+                    },
                 }"
                 method="POST"
                 action="{{ route('idea.store') }}"
@@ -109,15 +137,57 @@
 
                     <div>
                         <fieldset class="space-y-3">
-                            <legend class="label">Links</legend>
+                            <legend class="label">Actionable steps</legend>
 
-                            <template x-for="(link, index) in links" :key="link">
+                            <template x-for="(step, index) in steps" :key="index">
                                 <div class="flex items-center gap-x-2">
-                                    <input name="links[]" x-model="link" class="input" />
+                                    <input name="steps[]" x-model="steps[index]" class="input" />
                                     <button
                                         type="button"
                                         aria-label="remove link"
-                                        @click="links.splice(index, 1)"
+                                        @click="deleteStep(index)"
+                                        class="form-muted-icon"
+                                    >
+                                        <x-icons.close />
+                                    </button>
+                                </div>
+                            </template>
+
+                            <div class="flex items-center gap-x-2">
+                                <input
+                                    x-model="newStep"
+                                    id="new-step"
+                                    data-test="new-step"
+                                    placeholder="What needs to be done?"
+                                    class="input flex-1"
+                                    spellcheck="false"
+                                />
+
+                                <button
+                                    type="button"
+                                    @click="pushStep()"
+                                    data-test="submit-new-step-button"
+                                    :disabled="isStepEmpty"
+                                    aria-label="Add link button"
+                                    class="form-muted-icon"
+                                >
+                                    <x-icons.close class="rotate-45" />
+                                </button>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div>
+                        <fieldset class="space-y-3">
+                            <legend class="label">Links</legend>
+
+                            <template x-for="(link, index) in links" :key="index">
+                                <div class="flex items-center gap-x-2">
+                                    <input name="links[]" x-model="links[index]" class="input" />
+                                    <button
+                                        type="button"
+                                        aria-label="remove link"
+                                        @click="deleteLink(index)"
                                         class="form-muted-icon"
                                     >
                                         <x-icons.close />
@@ -139,12 +209,9 @@
 
                                 <button
                                     type="button"
-                                    @click="
-                                        links.push(newLink.trim());
-                                        newLink = '';
-                                    "
+                                    @click="pushLink()"
                                     data-test="submit-new-link-button"
-                                    :disabled="newLink.trim().length === 0"
+                                    :disabled="isLinkEmpty"
                                     aria-label="Add link button"
                                     class="form-muted-icon"
                                 >
