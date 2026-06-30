@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateIdea;
 use App\Enums\IdeaStatus;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
-use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Throwable;
 
 class IdeaController extends Controller
 {
@@ -45,20 +46,12 @@ class IdeaController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @throws Throwable
      */
-    public function store(StoreIdeaRequest $request): RedirectResponse
+    public function store(StoreIdeaRequest $request, CreateIdea $action): RedirectResponse
     {
-        /** @var User $user */
-        $user = $request->user();
-
-        /** @var Idea $idea */
-        $idea = $user->ideas()->create($request->safe()->except(['steps', 'image']));
-
-        $idea->steps()->createMany(collect($request->steps)->map(fn (string $step) => ['description' => $step]));
-
-        $imagePath = $request->image->store('ideas', 'public');
-        $idea->update(['image_path' => $imagePath]);
-
+        $action->handle($request->safe->all());
         return to_route('idea.index')
             ->with('success', 'Idea created successfully.');
     }
