@@ -52,9 +52,12 @@ class IdeaController extends Controller
         $user = $request->user();
 
         /** @var Idea $idea */
-        $idea = $user->ideas()->create($request->safe()->except('steps'));
+        $idea = $user->ideas()->create($request->safe()->except(['steps', 'image']));
 
         $idea->steps()->createMany(collect($request->steps)->map(fn (string $step) => ['description' => $step]));
+
+        $imagePath = $request->image->store('ideas', 'public');
+        $idea->update(['image_path' => $imagePath]);
 
         return to_route('idea.index')
             ->with('success', 'Idea created successfully.');

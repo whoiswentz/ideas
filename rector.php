@@ -11,6 +11,7 @@ use RectorLaravel\Rector\MethodCall\EloquentWhereRelationTypeHintingParameterRec
 use RectorLaravel\Rector\MethodCall\EloquentWhereTypeHintClosureParameterRector;
 use RectorLaravel\Set\LaravelSetProvider;
 
+/** @noinspection PhpUnhandledExceptionInspection — config-validation errors are meant to surface to the developer running Rector */
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/app',

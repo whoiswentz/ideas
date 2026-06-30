@@ -1,5 +1,5 @@
 @php
-    use App\Models\Idea
+    use App\Models\Idea;
 
     /** @var Idea $idea */
 @endphp
@@ -22,6 +22,16 @@
         </div>
 
         <div class="mt-8 space-y-6">
+            @if ($idea->image_path)
+                <div class="overflow-hidden rounded-lg">
+                    <img
+                        src="{{ asset('storage/' . $idea->image_path) }}"
+                        alt="idea image"
+                        class="h-auto w-full object-cover"
+                    />
+                </div>
+            @endif
+
             <h1 class="text-4xl font-bold">{{ $idea->title }}</h1>
             <div class="mt-2 flex items-center gap-x-3">
                 <x-idea.status-label :status="$idea->status->value"> {{ $idea->status->label() }} </x-idea.status-label>

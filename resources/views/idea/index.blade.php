@@ -1,5 +1,4 @@
 @php
-    use App\Enums\IdeaStatus;
     use App\Models\Idea;
     use Illuminate\Support\Collection;
 
@@ -25,23 +24,21 @@
             </x-card>
         </header>
 
-        <div>
-            <a href="/ideas" class="btn {{ request()->has('status') ? 'btn-outlined' : '' }}"> All </a>
-            @foreach (IdeaStatus::cases() as $status)
-                <a
-                    href="/ideas?status={{ $status->value }}"
-                    class="btn {{ request('status') === $status->value ? '' : 'btn-outlined' }}"
-                >
-                    {{ $status->label() }}
-                    <span class="pl-3 text-xs"> {{ $statusCounts->get($status->value) }} </span>
-                </a>
-            @endforeach
-        </div>
+        <x-idea.status-filter :counts="$statusCounts" />
 
         <div class="text-muted-foreground mt-10">
             <div class="grid gap-6 md:grid-cols-2">
                 @forelse ($ideas as $idea)
                     <x-card href="{{ route('idea.show', $idea) }}">
+                        @if ($idea->image_path)
+                            <div class="-mx-4 -mt-4 mb-4 overflow-hidden rounded-t-lg">
+                                <img
+                                    src="{{ asset('storage/' . $idea->image_path) }}"
+                                    alt="idea image"
+                                    class="h-48 w-full object-cover"
+                                />
+                            </div>
+                        @endif
                         <h3 class="text-foreground text-lg">{{ $idea->title }}</h3>
                         <div class="mt-1">
                             <x-idea.status-label status="{{ $idea->status }}">
@@ -68,6 +65,10 @@
                     newStep: '',
                     links: [],
                     steps: [],
+
+                    setStatus(value) {
+                        this.status = value;
+                    },
 
                     deleteLink(index) {
                         this.links.splice(index, 1);
@@ -97,6 +98,7 @@
                 }"
                 method="POST"
                 action="{{ route('idea.store') }}"
+                enctype="multipart/form-data"
             >
                 @csrf
 
@@ -109,24 +111,7 @@
                         required
                     />
 
-                    <div class="space-y-2">
-                        <label for="status" class="label">Status</label>
-                        <div class="flex gap-x-3">
-                            @foreach (IdeaStatus::cases() as $status)
-                                <button
-                                    type="button"
-                                    @click="status = @js($status->value)"
-                                    data-test="button-status-{{ $status->value }}"
-                                    class="btn btn-outlined h-10 flex-1"
-                                    :class="{ 'btn-outlined': status !== @js($status->value) }"
-                                >
-                                    {{ $status->label() }}
-                                </button>
-                            @endforeach
-                            <input type="hidden" name="status" :value="status" />
-                        </div>
-                        <x-form.error name="status" />
-                    </div>
+                    <x-idea.status-selector selected="status" on-select="setStatus" />
 
                     <x-form.field
                         label="Description"
@@ -134,6 +119,13 @@
                         type="textarea"
                         placeholder="Describe you idea..."
                     />
+
+                    <div class="space-y-2">
+                        <label for="image" class="label"> Featured Image </label>
+
+                        <input type="file" name="image" accept="image/*" />
+                        <x-form.error name="image" />
+                    </div>
 
                     <div>
                         <fieldset class="space-y-3">

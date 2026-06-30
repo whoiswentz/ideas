@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\IdeaStatus;
-use Carbon\Carbon;
 use Database\Factories\IdeaFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
@@ -14,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Override;
 
@@ -31,7 +31,8 @@ use Override;
     'description',
     'status',
     'links',
-    'steps'
+    'steps',
+    'image_path',
 )]
 class Idea extends Model
 {

@@ -7,6 +7,7 @@
 ])
 
 @php
+    /** @var IdeaStatus|string $status */
     $classes = 'inline-block rounded-full border px-2 py-1 text-xs font-medium';
     $status = $status instanceof IdeaStatus ? $status->value : $status;
 
