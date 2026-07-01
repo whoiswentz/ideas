@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Idea;
 use App\Models\User;
 
 it('can create a idea', function () {
@@ -16,16 +17,25 @@ it('can create a idea', function () {
         ->click('@submit-new-link-button')
         ->fill('@new-link', 'https://example2.com/ideas')
         ->click('@submit-new-link-button')
+        ->fill('@new-step', 'Step 1')
+        ->click('@submit-new-step-button')
+        ->fill('@new-step', 'Step 2')
+        ->click('@submit-new-step-button')
         ->click('Create')
         ->assertPathIs('/ideas');
 
-    expect($user->ideas()->first())->toMatchArray([
-        'title' => 'Some idea example',
-        'status' => 'completed',
-        'description' => 'Some idea example',
-        'links' => [
-            'https://example.com/ideas',
-            'https://example2.com/ideas',
-        ],
-    ]);
+    /** @var Idea $idea */
+    $idea = $user->ideas()->first();
+
+    expect($idea)
+        ->toMatchArray([
+            'title' => 'Some idea example',
+            'status' => 'completed',
+            'description' => 'Some idea example',
+            'links' => [
+                'https://example.com/ideas',
+                'https://example2.com/ideas',
+            ],
+        ])
+        ->and($idea->steps)->toHaveCount(2);
 });

@@ -12,6 +12,7 @@ use App\Models\Idea;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Throwable;
 
@@ -52,6 +53,7 @@ class IdeaController extends Controller
     public function store(StoreIdeaRequest $request, CreateIdea $action): RedirectResponse
     {
         $action->handle($request->safe->all());
+
         return to_route('idea.index')
             ->with('success', 'Idea created successfully.');
     }
@@ -61,6 +63,8 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea): View|Factory
     {
+        Gate::authorize('workWith', $idea);
+
         return view('idea.show', [
             'idea' => $idea,
         ]);
@@ -71,7 +75,7 @@ class IdeaController extends Controller
      */
     public function edit(Idea $idea): void
     {
-        //
+        Gate::authorize('workWith', $idea);
     }
 
     /**
@@ -79,7 +83,7 @@ class IdeaController extends Controller
      */
     public function update(UpdateIdeaRequest $request, Idea $idea): void
     {
-        //
+        Gate::authorize('workWith', $idea);
     }
 
     /**
@@ -87,6 +91,8 @@ class IdeaController extends Controller
      */
     public function destroy(Idea $idea): RedirectResponse
     {
+        Gate::authorize('workWith', $idea);
+
         $idea->delete();
 
         return to_route('idea.index');
