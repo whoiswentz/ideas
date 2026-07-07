@@ -19,10 +19,13 @@ use Override;
 
 /***
  * @property string id
+ * @property string title
+ * @property string description
  * @property User user
  * @property IdeaStatus status
  * @property array<Step> steps
  * @property array<string> links
+ * @property string image_path
  * @property Carbon created_at
  * @property Carbon updated_at
  */

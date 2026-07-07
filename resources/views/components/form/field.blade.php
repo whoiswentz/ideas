@@ -1,4 +1,9 @@
-@props (['label' => false, 'name', 'type' => 'text'])
+@props ([
+    'label' => false,
+    'name',
+    'type' => 'text',
+    'value' => null
+    ])
 
 <div class="space-y-2">
     @if ($label)
@@ -7,7 +12,7 @@
 
     @if ($type === 'textarea')
         <textarea name="{{ $name }}" id="{{ $name }}" class="textarea" {{ $attributes }}
-            >{{ old($name) }}
+            >{{ old($name, $value) }}
         </textarea
         >
     @else
@@ -16,7 +21,7 @@
             class="input"
             id="{{ $name }}"
             name="{{ $name }}"
-            value="{{ old($name) }}"
+            value="{{ old($name, $value) }}"
             {{ $attributes }}
         />
     @endif

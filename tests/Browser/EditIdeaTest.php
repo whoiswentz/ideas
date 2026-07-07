@@ -10,7 +10,7 @@ it('can create a idea', function () {
     $idea = Idea::factory()->for($user)->create();
 
     visit('/ideas')
-        ->click('@create-idea-button')
+        ->click('@edit-idea-button')
         ->fill('title', 'Some idea example')
         ->click('@button-status-completed')
         ->fill('description', 'Some idea example')

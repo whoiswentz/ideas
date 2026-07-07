@@ -11,7 +11,14 @@
                 <x-icons.arrow-back /> Back to Ideas
             </a>
             <div class="flex items-center gap-x-3">
-                <button class="btn btn-outlined">Edit Idea</button>
+                <button
+                    x-data
+                    class="btn btn-outlined"
+                    data-test="edit-idea-button"
+                    @click="$dispatch('open-modal', 'edit-idea')"
+                >
+                    Edit Idea
+                </button>
                 <form method="POST" action="{{ route('idea.destroy', $idea) }}">
                     @csrf
                     @method ('DELETE')
@@ -37,9 +44,12 @@
                 <x-idea.status-label :status="$idea->status->value"> {{ $idea->status->label() }} </x-idea.status-label>
                 <div class="text-muted-foreground text-sm">{{ $idea->created_at->diffForHumans() }}</div>
             </div>
-            <x-card class="mt-6">
-                <div class="text-foreground max-w-none cursor-pointer">{{ $idea->description }}</div>
-            </x-card>
+
+            @if ($idea->description)
+                <x-card class="mt-6">
+                    <div class="text-foreground max-w-none cursor-pointer">{{ $idea->description }}</div>
+                </x-card>
+            @endif
 
             @if ($idea->steps->count())
                 <div>
@@ -78,5 +88,7 @@
                 </div>
             @endif
         </div>
+
+        <x-idea.modal :idea="$idea" />
     </div>
 </x-layout>
