@@ -6,7 +6,7 @@ test('register a user', function () {
         ->fill('email', 'jonh@example.com')
         ->fill('password', 'password@123')
         ->click('@create-account-button')
-        ->assertPathIs('/');
+        ->assertPathIs('/ideas');
 
     $this->assertAuthenticated();
     expect(Auth::user())->toMatchArray([

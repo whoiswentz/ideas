@@ -17,7 +17,7 @@
 
     $status = old('status', $idea->status->value);
     $links = old('links', $idea->links);
-    $steps = old('steps', $idea->steps->map(fn(Step $step) => $step->description))
+    $steps = old('steps', $idea->steps->map->only(['id', 'description', 'completed']));
 @endphp
 
 <x-modal name="{{ $name }}" title="{{ $title }}">
@@ -26,6 +26,7 @@
             status: @js($status),
             newLink: '',
             newStep: '',
+            hasImage: false,
             links: @js($links ?? []),
             steps: @js($steps),
 
@@ -47,7 +48,7 @@
             },
 
             pushStep() {
-                this.steps.push(this.newStep.trim());
+                this.steps.push({ description: this.newStep.trim(), completed: false });
                 this.newStep = '';
             },
 
@@ -62,6 +63,7 @@
         method="POST"
         action="{{ $formAction }}"
         enctype="multipart/form-data"
+        :enctype="hasImage ? 'multipart/form-data' : 'application/x-www-form-urlencoded'"
     >
         @csrf
 
@@ -104,7 +106,7 @@
                     </div>
                 @endif
 
-                <input type="file" name="image" accept="image/*" />
+                <input type="file" name="image" accept="image/*" @change="hasImage = $event.target.files.length > 0" />
                 <x-form.error name="image" />
             </div>
 
@@ -114,7 +116,13 @@
 
                     <template x-for="(step, index) in steps" :key="index">
                         <div class="flex items-center gap-x-2">
-                            <input name="steps[]" x-model="steps[index]" class="input" />
+                            <input :name="`steps[${index}][description]`" x-model="step.description" class="input" />
+                            <input
+                                type="hidden"
+                                :name="`steps[${index}][completed]`"
+                                :value="step.completed ? '1' : '0'"
+                            />
+
                             <button
                                 type="button"
                                 aria-label="remove link"
@@ -141,7 +149,7 @@
                             @click="pushStep()"
                             data-test="submit-new-step-button"
                             :disabled="isStepEmpty"
-                            aria-label="Add link button"
+                            aria-label="Add new step"
                             class="form-muted-icon"
                         >
                             <x-icons.close class="rotate-45" />

@@ -13,6 +13,10 @@ label {
     color: var(--color-foreground);
     outline: 2px solid transparent;
     outline-offset: 2px;
+
+    @variant md {
+        font-size: var(--text-sm);
+    }
 }
 
 .input::placeholder {
@@ -22,12 +26,6 @@ label {
 .input:focus-visible {
     outline: 0;
     box-shadow: 0 0 0 calc(var(--spacing) * .5) var(--color-background) 0 0 0 calc(var(--spacing) * 1) var(--color-primary);
-}
-
-@media (min-width: var(--breakpoint-md)) {
-    .input {
-        font-size: var(--text-sm);
-    }
 }
 
 .textarea {

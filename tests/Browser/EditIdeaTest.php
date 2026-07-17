@@ -3,13 +3,13 @@
 use App\Models\Idea;
 use App\Models\User;
 
-it('can create a idea', function () {
+it('can edit an idea', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $idea = Idea::factory()->for($user)->create();
+    $idea = Idea::factory()->for($user)->create(['links' => []]);
 
-    visit('/ideas')
+    visit(route('idea.show', $idea))
         ->click('@edit-idea-button')
         ->fill('title', 'Some idea example')
         ->click('@button-status-completed')
@@ -22,8 +22,9 @@ it('can create a idea', function () {
         ->click('@submit-new-step-button')
         ->fill('@new-step', 'Step 2')
         ->click('@submit-new-step-button')
-        ->click('Create')
-        ->assertPathIs('/ideas');
+        ->click('Update')
+        ->assertNoJavaScriptErrors()
+        ->assertPathIs('/ideas/'.$idea->id);
 
     /** @var Idea $idea */
     $idea = $user->ideas()->first();

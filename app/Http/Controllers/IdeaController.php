@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\CreateIdea;
+use App\Actions\UpdateIdea;
 use App\Enums\IdeaStatus;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
@@ -52,7 +53,7 @@ class IdeaController extends Controller
      */
     public function store(StoreIdeaRequest $request, CreateIdea $action): RedirectResponse
     {
-        $action->handle($request->safe->all());
+        $action->handle($request->safe()->all());
 
         return to_route('idea.index')
             ->with('success', 'Idea created successfully.');
@@ -80,11 +81,19 @@ class IdeaController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @throws Throwable
      */
-    public function update(UpdateIdeaRequest $request, Idea $idea): void
-    {
+    public function update(
+        UpdateIdeaRequest $request,
+        Idea $idea,
+        UpdateIdea $action
+    ): RedirectResponse {
         Gate::authorize('workWith', $idea);
 
+        $action->handle($idea, $request->safe()->all());
+
+        return back()->with('success', 'Idea Updated');
     }
 
     /**
